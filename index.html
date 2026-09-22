@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Das Ende</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 40px 20px;
+    background: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+#content {
+    max-width: 700px;
+    margin: auto;
+}
+
+button {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 15px;
+    background: black;
+    color: white;
+    border: 1px solid white;
+    font-size: 18px;
+}
+
+#resetButton {
+    margin-top: 80px;
+    border-color: #555;
+    color: #777;
+    font-size: 12px;
+    padding: 8px;
+    max-width: 180px;
+}
+
+.end {
+    white-space: pre-line;
+}
+</style>
+</head>
+
+<body>
+
+<div id="content"></div>
+
+<button id="resetButton" onclick="resetPreview()">
+↻ Vorschau zurücksetzen
+</button>
+
+<script>
+
+const content = document.getElementById("content");
+const params = new URLSearchParams(window.location.search);
+
+if (localStorage.getItem("permanentEnd") === "true") {
+    content.innerHTML = "";
+}
+else if (params.get("ende") === "1") {
+    showEnde1();
+}
+else {
+    showEntscheidung();
+}
+
+function showEnde1() {
+    content.innerHTML = `
+        <div class="end">
+
+Nicht permanent.
+
+Vergänglich, wie jedes tick oder tack.
+Von sekunde zur nächsten.
+Bis es tage werden.
+Bis es wochen werden.
+Bis du heute vergessen hast, weil es jahre her ist.
+
+Alles kommt und geht, genau wie diese sekunde,
+dieser tag, diese zeit.
+
+Das ist ja das gute daran, dinge nicht nur zu lesen,
+sondern erleben zu können.
+
+Denn die schlechten tage sind auch irgendwann vorbei.
+
+Dieses Ende ist offen.
+Denn es kann alles bedeuten.
+
+Wir wissen nicht was die zukunft für uns bereit hält,
+und man kann diesen aspekt im leben lieben lernen.
+
+Ein richtiges ende kommt schon noch, aber bis dahin...
+vergehen sekunden, tage, monate, jahre.
+
+Und jede kostbare sekunde, formt sich etwas neues.
+Schreibt sich was neues.
+
+Eine wunderschöne geschichte, nur für uns.♡
+        </div>
+    `;
+}
+
+function showEntscheidung() {
+    content.innerHTML = `
+
+        <div class="end">
+
+Es gibt manche dinge, die können wir nicht
+zurück nehmen.
+
+Ein ende das nicht offen ist, ist eines dieser
+dinge.
+
+        </div>
+
+        <button onclick="fortfahren()">
+            Fortfahren
+        </button>
+
+        <button onclick="vernunft()">
+            die stimme der vernunft
+        </button>
+    `;
+}
+
+function fortfahren() {
+    localStorage.setItem("permanentEnd", "true");
+    content.innerHTML = "";
+}
+
+function vernunft() {
+    showEnde1();
+}
+
+function resetPreview() {
+    localStorage.removeItem("permanentEnd");
+    window.location.href = window.location.pathname + "?ende=2";
+}
+
+</script>
+
+</body>
+</html>
