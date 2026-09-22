@@ -34,15 +34,6 @@ button {
     font-size: 18px;
 }
 
-#resetButton {
-    margin-top: 80px;
-    border-color: #555;
-    color: #777;
-    font-size: 12px;
-    padding: 8px;
-    max-width: 180px;
-}
-
 .end {
     white-space: pre-line;
 }
@@ -53,21 +44,43 @@ button {
 
 <div id="content"></div>
 
-
 <script>
 
 const content = document.getElementById("content");
 const params = new URLSearchParams(window.location.search);
 
+/*
+    Wenn das permanente Ende bereits gewählt wurde,
+    bleibt die Seite für diesen Browser leer.
+*/
 if (localStorage.getItem("permanentEnd") === "true") {
     content.innerHTML = "";
 }
+
+/*
+    ?ende=1
+    = direkt zum offenen Ende
+*/
 else if (params.get("ende") === "1") {
     showEnde1();
 }
+
+/*
+    ?ende=2
+    = Entscheidungsseite
+*/
+else if (params.get("ende") === "2") {
+    showEntscheidung();
+}
+
+/*
+    Keine Angabe
+    = ebenfalls Entscheidungsseite
+*/
 else {
     showEntscheidung();
 }
+
 
 function showEnde1() {
     content.innerHTML = `
@@ -106,6 +119,7 @@ Eine wunderschöne geschichte, nur für uns.♡
     `;
 }
 
+
 function showEntscheidung() {
     content.innerHTML = `
 
@@ -129,16 +143,26 @@ dinge.
     `;
 }
 
+
+/*
+    Fortfahren:
+    Das permanente Ende wird gesetzt.
+    Danach bleibt die Seite leer.
+*/
 function fortfahren() {
     localStorage.setItem("permanentEnd", "true");
     content.innerHTML = "";
 }
 
+
+/*
+    Stimme der Vernunft:
+    Wir laden tatsächlich ?ende=1.
+    Dadurch ändert sich die URL.
+*/
 function vernunft() {
-    showEnde1();
+    window.location.href = window.location.pathname + "?ende=1";
 }
-
-
 
 </script>
 
