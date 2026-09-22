@@ -22,16 +22,21 @@ body {
     margin: auto;
 }
 
-button {
+button,
+.choice {
     display: block;
     width: 100%;
     max-width: 400px;
     margin: 20px auto;
     padding: 15px;
+    box-sizing: border-box;
     background: black;
     color: white;
     border: 1px solid white;
     font-size: 18px;
+    font-family: Arial, sans-serif;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .end {
@@ -49,34 +54,14 @@ button {
 const content = document.getElementById("content");
 const params = new URLSearchParams(window.location.search);
 
-/*
-    Wenn das permanente Ende bereits gewählt wurde,
-    bleibt die Seite für diesen Browser leer.
-*/
 if (localStorage.getItem("permanentEnd") === "true") {
     content.innerHTML = "";
 }
 
-/*
-    ?ende=1
-    = direkt zum offenen Ende
-*/
 else if (params.get("ende") === "1") {
     showEnde1();
 }
 
-/*
-    ?ende=2
-    = Entscheidungsseite
-*/
-else if (params.get("ende") === "2") {
-    showEntscheidung();
-}
-
-/*
-    Keine Angabe
-    = ebenfalls Entscheidungsseite
-*/
 else {
     showEntscheidung();
 }
@@ -137,31 +122,18 @@ dinge.
             Fortfahren
         </button>
 
-        <button onclick="vernunft()">
+        <!-- ECHTER LINK ZU EINER ANDEREN URL -->
+        <a class="choice"
+           href="https://authorbetweenlifeanddeath.github.io/choice/?ende=1">
             die stimme der vernunft
-        </button>
+        </a>
     `;
 }
 
 
-/*
-    Fortfahren:
-    Das permanente Ende wird gesetzt.
-    Danach bleibt die Seite leer.
-*/
 function fortfahren() {
     localStorage.setItem("permanentEnd", "true");
     content.innerHTML = "";
-}
-
-
-/*
-    Stimme der Vernunft:
-    Wir laden tatsächlich ?ende=1.
-    Dadurch ändert sich die URL.
-*/
-function vernunft() {
-    window.location.href = window.location.pathname + "?ende=1";
 }
 
 </script>
